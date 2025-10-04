@@ -1,119 +1,261 @@
-# 🚀 ACTA Global Hackathon
+# 🧠 Memory Keeper for Grandparents
 
-**24 hours to build something impressive.**
+**Preserve precious family memories through AI-powered conversations**
 
-## ⏰ Timeline
+A beautiful web application that helps grandparents share their life stories through guided AI conversations, transforming them into shareable blog posts and PDFs.
 
-- **Start**: Oct 4, 2025 at 12:00 CET
-- **End**: Oct 5, 2025 at 12:00 CET
-- **Duration**: 24 hours
+## ✨ Features
 
-## 🏆 Prizes
+### 🤖 AI-Powered Conversations
+- **Guided Memory Questions**: AI asks thoughtful questions about childhood, family, career, and life lessons
+- **Contextual Follow-ups**: Dynamic conversations that build on previous responses
+- **Empathetic AI**: Warm, patient, and encouraging conversation style
+- **Voice Support**: Optional voice input and text-to-speech output
 
-1. **1st**: One week in Cape Town (flights + hotel)
-2. **2nd**: €300 + fast-tracked interview
-3. **3rd**: Raspberry Pi + fast-tracked interview
+### 📝 Memory Blog Generation
+- **Beautiful Blog Posts**: Transform conversations into well-structured, readable blog posts
+- **Smart Summarization**: AI-generated summaries and tags
+- **Markdown Formatting**: Rich text with headings, timestamps, and formatting
+- **PDF Export**: Download memories as beautifully formatted PDFs
+- **Shareable Links**: Create unique links to share memories with family
 
-## 💡 What to Build
+### 🔐 Secure & Private
+- **Supabase Authentication**: Email magic links and guest login options
+- **Row-Level Security**: Your memories are private and secure
+- **Real-time Updates**: Live chat and memory synchronization
+- **Data Ownership**: Full control over your personal data
 
-**Option 1: Build anything you wish existed** (open format - truly anything!)
+### 🎨 Beautiful Design
+- **Warm, Accessible Theme**: Carefully designed for grandparents
+- **Responsive Design**: Works perfectly on all devices
+- **High Contrast Mode**: Accessibility features for better visibility
+- **Large Fonts**: Easy-to-read interface
 
-**Option 2: Choose one of these problem statements:**
+## 🚀 Tech Stack
 
-### 1. Memory Keeper for Grandparents
-Interactive AI conversations that capture grandparents' life memories and turn them into blog posts for family members. Think Duolingo but for preserving family stories and wisdom.
+- **Frontend**: React 18 + Vite + TailwindCSS
+- **Backend**: Supabase (Database, Auth, Storage, Edge Functions)
+- **AI**: OpenAI GPT-4 for conversations and blog generation
+- **Deployment**: Vercel (Frontend) + Supabase (Backend)
 
-### 2. Graph-Based Learning System
-Transform linear course content (like [MIT's Statistics course](https://ocw.mit.edu/courses/18-05-introduction-to-probability-and-statistics-spring-2022/)) into an interactive graph-based learning experience. Organize concepts as nodes/connections to match how the brain actually learns - accelerating comprehension through visualization and non-linear exploration.
+## 📦 Installation & Setup
 
-### 3. Agent Orchestration Layer
-Build the n8n for AI agents - an orchestration platform for vertical agents to create AI-native companies. Solve context engineering and enable swarm intelligence across agent networks.
+### Prerequisites
+- Node.js 18+ 
+- Supabase account
+- OpenAI API key
 
-**Note**: These are extensive problems - MVPs are perfectly fine and expected!
-
-## 🎯 Rules
-
-- Solo or duo teams
-- Greenfield projects only
-- Any tech stack
-- Must be buildable in 24 hours
-- Read [RULES.md](./RULES.md) for anti-cheating requirements
-
-## 🚀 Quick Start
-
+### 1. Clone and Install
 ```bash
-# 1. Clone this repo
-git clone <your-fork-url>
+git clone https://github.com/jaswanth2302/global-hackathon-v1.git
 cd global-hackathon-v1
-
-# 2. Create timestamp (REQUIRED for anti-cheating)
-date > .hackathon-start
-git add .hackathon-start
-git commit -m "Starting hackathon - $(date)"
-git push
-
-# 3. Build your project here
-# 4. Commit regularly (minimum 5 commits)
+npm install
 ```
 
-## 📤 Submission
-
-**Deadline**: Oct 5, 2025 at 12:00 CET
-
-**Submit at**: [https://forms.acta.so/r/wMobdM](https://forms.acta.so/r/wMobdM)
-
-**You need**:
-1. Public GitHub repo URL
-2. 60-second demo video (Loom/YouTube - must be public)
-3. Live demo URL (deployed app)
-4. Your email and name
-
-## ✅ Before Submitting
-
+### 2. Environment Setup
 ```bash
-# Run verification
-node verify-submission.js
+# Copy environment template
+cp .env.example .env
+
+# Add your credentials to .env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_OPENAI_API_KEY=your_openai_api_key
 ```
 
-Check:
-- [ ] GitHub repo is public
-- [ ] 60s video is public and accessible
-- [ ] Live demo works in incognito window
-- [ ] Made 5+ commits during the 24 hours
-- [ ] README updated with project info
+### 3. Database Setup
+```bash
+# Run database migrations in Supabase
+# Copy the SQL from supabase/migrations/001_initial_schema.sql
+# and run it in your Supabase SQL editor
+```
 
-## 🎬 Judging
+### 4. Deploy Edge Functions
+```bash
+# Deploy Supabase Edge Functions
+supabase functions deploy generate-ai-response
+supabase functions deploy generate-memory-blog
+supabase functions deploy export-memory-pdf
+```
 
-**Top 25 submissions** will be ranked 1-10 on each criterion:
+### 5. Start Development
+```bash
+npm run dev
+```
 
-### Craft (1-10)
-Quality of execution, code quality, attention to detail, polish. Does it work smoothly? Is it well-built? A simple feature done exceptionally well scores higher than complex features done poorly.
+## 🗄️ Database Schema
 
-### Novelty (1-10)
-Originality and innovation. Is this a fresh take? Does it approach the problem differently? Bonus points for ideas that make judges think "why doesn't this exist yet?"
+### Users Table
+- `id` (UUID, Primary Key)
+- `name` (Text)
+- `email` (Text)
+- `profile_photo_url` (Text, Optional)
+- `created_at`, `updated_at` (Timestamps)
 
-### Utility (1-10)
-Practical usefulness and real-world value. Would people actually use this? Does it solve a genuine problem? Could this become a real product?
+### Memories Table
+- `id` (UUID, Primary Key)
+- `user_id` (UUID, Foreign Key)
+- `title` (Text)
+- `content` (Text, Markdown)
+- `summary` (Text)
+- `tags` (Text Array)
+- `media_urls` (Text Array)
+- `created_at`, `updated_at` (Timestamps)
 
-### Taste (1-10)
-Design sensibility, user experience, aesthetic choices. Is it intuitive? Does it feel good to use? Great taste shows in the details - from UI design to interaction patterns to copy writing.
+### Chat History Table
+- `id` (UUID, Primary Key)
+- `user_id` (UUID, Foreign Key)
+- `session_id` (Text)
+- `message` (Text)
+- `sender` (Enum: 'USER', 'AI')
+- `timestamp` (Timestamp)
 
-**Final scores** are calculated by summing all four dimensions. Highest total wins.
+### Blog Exports Table
+- `id` (UUID, Primary Key)
+- `memory_id` (UUID, Foreign Key)
+- `pdf_url` (Text, Optional)
+- `share_link` (Text, Optional)
+- `created_at` (Timestamp)
 
-## 💡 Tips
+## 🔧 API Endpoints
 
-- Start simple, iterate
-- Commit often (proves authenticity)
-- Deploy early (Vercel, Netlify, Railway)
-- Record demo showing actual functionality
-- Read [RULES.md](./RULES.md) to avoid disqualification
+### Supabase Edge Functions
+
+#### `generate-ai-response`
+- **Purpose**: Generate AI responses for chat conversations
+- **Input**: `{ message, history, sessionId }`
+- **Output**: `{ response }`
+
+#### `generate-memory-blog`
+- **Purpose**: Transform chat history into blog post
+- **Input**: `{ memoryId }`
+- **Output**: `{ memory, blog }`
+
+#### `export-memory-pdf`
+- **Purpose**: Export memory as PDF
+- **Input**: `{ memoryId }`
+- **Output**: PDF file
+
+## 🎯 Hackathon Features
+
+### Core Functionality
+✅ **Complete MVP** - All features working end-to-end  
+✅ **AI Integration** - OpenAI GPT-4 for conversations and blog generation  
+✅ **Database** - Full Supabase integration with RLS security  
+✅ **Authentication** - Magic link and guest login  
+✅ **Real-time Chat** - Live conversation interface  
+✅ **Blog Generation** - AI-powered memory blog creation  
+✅ **PDF Export** - Download memories as PDFs  
+✅ **Responsive Design** - Works on all devices  
+
+### Advanced Features
+✅ **Voice Input/Output** - Accessibility features  
+✅ **Session Management** - Track conversation sessions  
+✅ **Memory Dashboard** - View and manage all memories  
+✅ **Shareable Links** - Share memories with family  
+✅ **Tag System** - Organize memories by topics  
+✅ **Search & Filter** - Find specific memories  
+
+## 🚀 Deployment
+
+### Frontend (Vercel)
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to Vercel
+vercel --prod
+```
+
+### Backend (Supabase)
+1. Create new Supabase project
+2. Run database migrations
+3. Deploy Edge Functions
+4. Configure environment variables
+
+## 🧪 Testing
+
+### Manual Testing Checklist
+- [ ] User registration and login
+- [ ] AI conversation flow
+- [ ] Memory blog generation
+- [ ] PDF export functionality
+- [ ] Responsive design on mobile
+- [ ] Accessibility features
+- [ ] Real-time updates
+
+### Test Scenarios
+1. **New User Journey**: Sign up → Start conversation → Generate blog → Export PDF
+2. **Guest User**: Quick access without registration
+3. **Memory Management**: View, edit, and organize memories
+4. **Sharing**: Create and test shareable links
+
+## 📱 User Experience
+
+### For Grandparents
+- **Simple Interface**: Large buttons, clear text, intuitive navigation
+- **Guided Conversations**: AI asks natural, engaging questions
+- **No Technical Knowledge Required**: Just type and share stories
+- **Immediate Results**: See memories transformed into beautiful blogs
+
+### For Family Members
+- **Easy Sharing**: Receive shareable links to read memories
+- **Beautiful Formatting**: Professional-looking blog posts
+- **PDF Downloads**: Save memories permanently
+- **Search & Organize**: Find specific stories and topics
+
+## 🔒 Security & Privacy
+
+- **Row-Level Security**: Users can only access their own data
+- **Encrypted Storage**: All data encrypted at rest
+- **No Data Mining**: Conversations are private and not used for training
+- **GDPR Compliant**: Full data ownership and deletion rights
+- **Secure Authentication**: Magic link authentication with Supabase
+
+## 🎨 Design Philosophy
+
+### Accessibility First
+- **High Contrast**: Support for users with visual impairments
+- **Large Fonts**: Easy reading for all ages
+- **Voice Navigation**: Screen reader compatibility
+- **Keyboard Navigation**: Full keyboard accessibility
+
+### Warm & Inviting
+- **Soft Colors**: Warm, pastel color palette
+- **Friendly Typography**: Georgia serif for readability
+- **Gentle Animations**: Subtle, non-distracting effects
+- **Emotional Design**: Creates connection and trust
+
+## 🚀 Future Enhancements
+
+- **Multi-language Support**: Conversations in different languages
+- **Photo Integration**: Upload and attach photos to memories
+- **Timeline View**: Chronological memory organization
+- **Family Trees**: Connect memories to family relationships
+- **Voice Cloning**: Preserve actual voice recordings
+- **Advanced AI**: More sophisticated conversation flows
+
+## 📄 License
+
+MIT License - Built for the ACTA Global Hackathon 2025
+
+## 🤝 Contributing
+
+This is a hackathon project, but contributions are welcome! Please feel free to:
+- Report bugs
+- Suggest features
+- Submit pull requests
+- Share feedback
 
 ## 📞 Support
 
-- **Discord**: [Join](https://discord.gg/9KbH3f5M2a)
-- **Instagram**: [@acta.so](https://instagram.com/acta.so)
-- **Web**: [acta.so/hackathon](https://www.acta.so/hackathon)
+For questions or support:
+- **GitHub Issues**: Report bugs and feature requests
+- **Email**: Contact the development team
+- **Documentation**: Check the README and code comments
 
 ---
 
-**Good luck! 🎉**
+**Built with ❤️ for preserving precious family memories**
+
+*Memory Keeper - Where stories live forever*

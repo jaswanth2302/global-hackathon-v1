@@ -1,23 +1,37 @@
 {
-  "name": "acta-hackathon-starter",
+  "name": "memory-keeper-grandparents",
   "version": "1.0.0",
-  "description": "ACTA 24-hour Global Hackathon starter repository",
-  "main": "index.js",
+  "description": "Memory Keeper for Grandparents - AI-powered memory preservation app",
+  "type": "module",
   "scripts": {
-    "verify": "node verify-submission.js",
-    "start": "echo 'Add your start command here!'",
-    "test": "echo 'Add your test command here!'"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
   },
-  "keywords": [
-    "hackathon",
-    "acta",
-    "starter"
-  ],
-  "author": "ACTA Studios",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/actastudios/global-hackathon-v1"
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0",
+    "lucide-react": "^0.263.1",
+    "jspdf": "^2.5.1",
+    "html2canvas": "^1.4.1",
+    "openai": "^4.20.0",
+    "react-markdown": "^9.0.1",
+    "react-syntax-highlighter": "^15.5.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@vitejs/plugin-react": "^4.0.0",
+    "vite": "^4.1.0",
+    "tailwindcss": "^3.3.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3"
   }
 }
-
